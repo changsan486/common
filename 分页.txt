@@ -1,0 +1,73 @@
+一.Controller：
+@RequestMapping("/param")
+	@ResponseBody
+public Type paramName(@RequestParam(value = "pageNum", defaultValue = "1")Integer pageNum) {
+
+		PageHelper.startPage(pageNum, 10);
+		List<Object> object =  phoneService.getAll();
+		PageInfo<Object> page = new PageInfo<Object>(object,6);
+		return Msg.success().add("pageInfo", page);
+	}
+
+二.页面
+
+ <!-- 分页页码信息 -->
+		<div class="row">
+		    <!-- 页码 -->
+			<div class="col-lg-6" id="page_msg" style="font-size: 16px;font-weight: bold">
+				
+			</div>
+			<!-- 总览 -->
+			<div class="col-lg-6" id="page_nav">
+			  
+			</div>
+		</div>
+
+三.jsp：
+
+
+function build_page_msg(result){
+	    $("#page_msg").empty();
+  	    $("#page_msg").append("当前第"+
+  	    		              result.extend.pageInfo.pageNum+
+  	    		              "页,共"+result.extend.pageInfo.pages+
+  	    		              "页,总计"+result.extend.pageInfo.total+
+  	    		              "条记录");
+	}
+	//分页条回显
+	function build_page_nav(result){
+    	  $("#page_nav").empty();
+    	  var ul = $("<ul></ul>").addClass("pagination");
+    	  var first = $("<li></li>").append($("<a></a>").append("首页").attr("href","#"));
+    	  var prev = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href","#"));
+    	  if(!result.extend.pageInfo.hasPreviousPage){
+    	    first.addClass("disabled");
+            prev.addClass("disabled");    	  
+    	  }else{
+    	  first.click(function(){getType1(1);});
+    	  prev.click(function(){getType1(result.extend.pageInfo.pageNum-1);});    		  
+    	  }
+    	  var next = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href","#"));
+    	  var last = $("<li></li>").append($("<a></a>").append("尾页").attr("href","#"));
+    	  if(!result.extend.pageInfo.hasNextPage){
+    		  next.addClass("disabled");
+    		  last.addClass("disabled");    	  
+      	  }else{
+    	  next.click(function(){getType1(result.extend.pageInfo.pageNum+1);});
+    	  last.click(function(){getType1(result.extend.pageInfo.pages);});      		  
+      	  }
+    	  ul.append(first).append(prev);
+    	  $.each(result.extend.pageInfo.navigatepageNums,function(index,item){
+    		  var numLi = $("<li></li>").append($("<a></a>").append(item));
+    		  if(result.extend.pageInfo.pageNum==item){
+    			  numLi.addClass("active");
+    		  }
+    	      numLi.click(function(){
+    	    	  getType1(item);
+    	      });
+    		  ul.append(numLi);
+    	  });
+    	  ul.append(next).append(last);
+    	  var nav = $("<nav></nav>").append(ul);
+    	  nav.appendTo("#page_nav");
+      }

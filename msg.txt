@@ -1,0 +1,66 @@
+﻿JQuery帮助：http://jquery.cuishifeng.cn/
+  注意：
+8.1
+    1.SSM配置spring-mvc时记得不仅要扫描controller所在包，
+      而且要扫描service实现类所在包，否则不能正常自动注入（@Autowire）
+      
+    2.pom导入spring各个组件时记得统一版本号
+    
+    3.获取项目路径
+      <% pageContext.setAttribute("basePath",request.getContextPath())；%>
+      以后获取项目根路径只需前面加上${basePath}
+8.5      
+    4.mysql字段名注意不要是关键字
+    
+    5.[Err] 1055 - Expression #1 of ORDER BY clause is not in GROUP 
+      BY clause and contains nonaggregated column information_schema.PROFILING.SEQ’ 
+      which is not functionally dependent on columns in GROUP BY clause; 
+      this is incompatible with sql_mode=only_full_group_by
+      以上报错处理方式-- 查看SQL_MODE 
+                      SELECT @@sql_mode;
+                      -- 修改SQL_MODE
+                      SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+8.6      
+    6.function(@RequestParam("value")Object object)
+      @RequestParam用法:明确告诉mvc将发来请求(例:前台发来的ajax请求)中的值(value)赋给后面对象(object)
+      其中可定义属性有（1）required：指定url中参数是否为必传，默认为true，
+                                     当为true时，如果没传就会404。
+                                     当为false时，没传就会默认传null；基本数据类型时后台就会报空指针错误。
+                      （2）defaultValue（?）：指定参数默认值，没有同名参数时变量默认为此值。
+      
+    7.@PathVariable，function(@PathVariable("value")Object object)
+      与@RequestParam用法类似，是rest风格url中置顶路径中数据(value)赋给对象(object)
+      而rest风格就是指请求方式满足 GET:查询；POST：新增；PUT：修改；DELETE：删除；
+  
+    8. 区别实例
+      （1）@pathVariable("pageSize")  
+           需要配合rest风格url使用 	
+           http://127.0.0.1:8082/hello/4     
+      （2）@RequestParam((value = "pageSize", required = false, defaultValue = "10"))	
+           接收普通？后面携带的参数	 
+           http://127.0.0.1:8082/hello?pageSize=4
+           
+    9.一个项目完整的校验流程为  前端校验→后端校验→数据库约束
+    
+    10.JSR303(后端校验)
+       jar：hibernate validation
+       在entity实体类相应字段上加入注解
+       自定义校验注解格式@Patten(regxp(正则规则)="",message(错误信息）="")
+       !注意："\"在java中时转义符，因此正则表达式中"\"前面应再加一个"\"
+
+    11.比较变量地址==；比较变量值a.equals(b);
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+

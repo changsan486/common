@@ -1,0 +1,27 @@
+function move(obj,goal,changer){
+				clearInterval(timer);
+				timer=setInterval(function(){
+					let sty = 0;
+					if(changer=="opacity"){
+						sty = Math.round(parseFloat(getStyle(obj,changer))*100);
+					}else{
+						sty = parseInt(getStyle(obj,changer));
+					}
+				    let speed=(goal-sty)/10;
+					speed=speed>0?Math.ceil(speed):Math.floor(speed);
+					let tit = document.getElementById("title");
+					tit.innerHTML=speed.toString();
+					if(goal==sty){
+						clearInterval(timer);
+					}else{
+						if(changer=="opacity"){
+
+						}else{
+							obj.style[changer]=sty+speed+"px";
+						}
+					}
+				},30);
+			}
+function getStyle(obj,name){
+				return getComputedStyle(obj, null)[name];
+			}

@@ -1,0 +1,14 @@
+注意:
+    1.遍历方式for(var i in array/json){}
+
+    2.数组按大小排序，由于默认是是字符串排序，即字符串中字符从左到右拿出来比大小，
+      因此为了按大小需要改装成arr.sort(function(n1,n2){return n1-n2;};
+
+    3.获取非行间样式：IE8 obj.currentStyle[name]   Chrome FF getComputedStyle(obj, 随便放点东西)[name]
+       
+    4.parentNode:获取父节点   offsetParent:获取用于定位的父节点
+      childNodes:获取子节点(IE6为获取子元素节点)   .nodeType==?(?=1 文字节点; ?=2 属性节点; ?=3元素节点)
+      firstChild/lastChild/nextSibling/previousSibling:获取第一个/最后一个/下一个/上一个子节点(IE6-8问题同上)             
+      firstElementChild/lastElementChild/nextElementSibling/previousElementSibling:高版本获取元素节点
+      children:获取子元素节点
+    5.load()加载部分页面方式 
